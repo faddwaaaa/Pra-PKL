@@ -26,7 +26,7 @@ session_start();
 <?php include 'header.php'; ?>
 
 <div class="heading">
-   <h3>about us</h3>
+   <h2>about us</h2>
    <p> <a href="home.php">home</a> / about </p>
 </div>
 
@@ -134,9 +134,9 @@ session_start();
 
    </div>
 
-</section>
+</section>---->
 
-<section class="authors"> -->
+ <section class="authors">
 
    <h1 class="title">authors</h1>
    <div class="box-container">
@@ -160,10 +160,10 @@ session_start();
          <h3>Eka Kurniawan</h3>
       </div>
 
-      <div class="box">
+      <!-- <div class="box">
          <img src="img/author (hassan shadily).jpg" alt="">
          <h3>Hassan Shadily</h3>
-      </div>
+      </div> -->
 
       <div class="box">
          <img src="img/author (sapardi djoko damono).jpg" alt="">

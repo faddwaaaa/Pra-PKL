@@ -59,22 +59,22 @@ if (isset($_POST['add_to_cart'])) {
     </section>
 
     <section class="products">
-   <h1 class="title">Cerita Terbaik Untuk Kamu</h1>
+   <h1 class="title" style="font-size: 2.5rem;">Cerita Terbaik Untuk Kamu</h1>
 
-   <div class="box-container">
+   <div class="box-container" style=" grid-template-columns: repeat(4, 1fr);">
 
       <?php  
          $select_products = mysqli_query($koneksi, "SELECT * FROM `produk` LIMIT 8") or die('query failed');
          if(mysqli_num_rows($select_products) > 0){
             while($fetch_products = mysqli_fetch_assoc($select_products)){
       ?>
-      <form action="" method="post" class="box">
+      <form action="" method="post" class="box"style="display: block; border: 1px solid #eee; padding: 10px; position: relative; border-radius: 8px;">
          <a href="detail_produk.php?id=<?php echo $fetch_products['id']; ?>">
-            <img class="gambar" src="img/<?php echo $fetch_products['gambar']; ?>" alt="">
+            <img class="gambar" style="height: 350px; width: 100%;" src="img/<?php echo $fetch_products['gambar']; ?>" alt="">
          </a>
-         <div class="nama_buku"><?php echo $fetch_products['nama_buku']; ?></div>
-         <div class="nama_pengarang"><?php echo $fetch_products['nama_pengarang']; ?></div>
-         <div class="harga">Rp.<?php echo $fetch_products['harga']; ?></div>
+         <div class="nama_buku" style="font-size: 1.8rem;"><?php echo $fetch_products['nama_buku']; ?></div>
+         <div class="nama_pengarang" style="font-size: 1.5rem;"><?php echo $fetch_products['nama_pengarang']; ?></div>
+         <div class="harga" style="padding: 4px 8px; border-radius: 4px; font-size: 1.8rem;">Rp.<?php echo $fetch_products['harga']; ?></div>
       </form>
       <?php
             }

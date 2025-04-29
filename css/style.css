@@ -648,7 +648,7 @@ section{
  .products .box-container {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-   gap: 1.5rem;
+   gap: 2rem;
    max-width: 1200px;
    margin: 0 auto;
    padding: 0 10px;
@@ -658,11 +658,11 @@ section{
    background: #fff;
    border: 1px solid #eee;
    padding: 10px;
-   text-align: left; /* ganti dari center agar teks tidak menumpuk ke kanan */
    position: relative;
    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
    transition: transform 0.2s ease;
-   border-radius: 8px;
+   border-radius: 12px;
+   overflow: hidden;
  }
  
  .products .box:hover {
@@ -672,25 +672,25 @@ section{
  /* Gambar buku */
  .products .box .gambar {
    width: 100%;
-   height: 240px;
+   height: 280px;
    object-fit: cover;
-   border-radius: 5px;
-   margin-bottom: 12px;
+   border-radius: 8px;
    display: block;
+   margin-bottom: 12px;
  }
  
  /* Harga badge */
  .products .box .harga {
    position: absolute;
-   top: 10px;
-   left: 10px;
+   top: 12px;
+   left: 12px;
    background-color: red;
    color: white;
-   padding: 4px 8px;
-   border-radius: 4px;
-   font-size: 1rem;
+   padding: 5px 10px;
+   border-radius: 6px;
+   font-size: 0.95rem;
    font-weight: bold;
-   z-index: 1;
+   z-index: 2;
  }
  
  /* Nama buku */
@@ -700,7 +700,7 @@ section{
    margin: 8px 0 4px;
    color: #333;
    text-transform: capitalize;
-   display: block;
+   text-align: center;
  }
  
  /* Nama pengarang */
@@ -708,18 +708,39 @@ section{
    font-size: 0.9rem;
    color: #666;
    margin-bottom: 8px;
-   text-transform: lowercase;
-   display: block;
+   text-align: center;
+   text-transform: capitalize;
  }
  
+ /* Responsive */
  @media (max-width: 768px) {
    .products .box-container {
      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-     gap: 1rem;
+     gap: 1.2rem;
+   }
+ 
+   .products .box .gambar {
+     height: 220px;
    }
  
    .products .box .harga {
-     font-size: 0.9rem;
+     font-size: 0.85rem;
+     padding: 4px 8px;
+   }
+ }
+ 
+ @media (max-width: 480px) {
+   .products .box-container {
+     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+     gap: 1rem;
+   }
+ 
+   .products .box .gambar {
+     height: 200px;
+   }
+ 
+   .products .box .harga {
+     font-size: 0.8rem;
      padding: 3px 6px;
    }
  
@@ -728,29 +749,10 @@ section{
    }
  
    .products .box .nama_pengarang {
-     font-size: 0.8rem;
+     font-size: 0.85rem;
    }
  }
  
- @media (max-width: 480px) {
-   .products .box-container {
-     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-     gap: 0.8rem;
-   }
- 
-   .products .box .harga {
-     font-size: 0.8rem;
-     padding: 2px 5px;
-   }
- 
-   .products .box .nama_buku {
-     font-size: 0.9rem;
-   }
- 
-   .products .box .nama_pengarang {
-     font-size: 0.8rem;
-   }
- }
  
  /* css detail produk */
  .detail-container {
@@ -1076,64 +1078,54 @@ section{
    margin-top: 1rem;
 } */
 
-.authors .box-container{
-   max-width: 1200px;
-   margin:0 auto;
-   display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-   align-items: center;
-   gap:1.5rem;
-   justify-content: center;
+/* ============ Authors Section ============ */
+.authors {
+   background: #fff;
+   padding: 3rem 2rem;
 }
 
-.authors .box-container .box{
-   position: relative;
+.authors .title {
    text-align: center;
-   border:var(--border);
-   box-shadow: var(--box-shadow);
-   overflow: hidden;
-   border-radius: .5rem;
-}
-
-.authors .box-container .box img{
-   width: 100%;
-   height: 40rem;
-   object-fit: cover;
-}
-
-.authors .box-container .box .share{
-   position: absolute;
-   top:0; left:-10rem;
-}
-
-.authors .box-container .box:hover .share{
-   left: 1rem;
-}
-
-.authors .box-container .box .share a{
-   height: 4.5rem;
-   width: 4.5rem;
-   line-height: 4.5rem;
-   font-size: 2rem;
-   background-color: var(--white);
-   border:var(--border);
-   display: block;
-   margin-top: 1rem;
-   color:var(--black);
-}
-
-.authors .box-container .box .share a:hover{
-   background-color: var(--black);
-   color:var(--white);
-}
-
-.authors .box-container .box h3{
    font-size: 2.5rem;
-   color:var(--black);
-   padding:1.5rem;
+   color: var(--main-color);
+   margin-bottom: 2rem;
+}
+
+.authors .box-container {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   gap: 2rem;
+   max-width: 1200px;
+   margin: auto;
+}
+
+.authors .box-container .box {
+   text-align: center;
+   border: var(--border);
+   box-shadow: var(--box-shadow);
+   border-radius: 1rem;
+   overflow: hidden;
    background-color: var(--white);
 }
 
+.authors .box-container .box img {
+   width: 100%;
+   height: 220px; /* Lebih kecil dari sebelumnya */
+   object-fit: cover;
+   border-bottom: var(--border);
+   transition: transform 0.3s;
+}
+
+.authors .box-container .box img:hover {
+   transform: scale(1.05);
+}
+
+.authors .box-container .box h3 {
+   font-size: 1.5rem;
+   padding: 1rem;
+   background: var(--white);
+   color: var(--black);
+}
 /*------- detail produk --------*/
 
  
