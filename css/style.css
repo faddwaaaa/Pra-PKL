@@ -638,7 +638,7 @@ section{
  }
  
  .products .title {
-   font-size: 2rem;             /* sedikit dikecilkan */
+   font-size: 2rem;
    text-align: center;
    margin-bottom: 30px;
    font-weight: bold;
@@ -648,8 +648,8 @@ section{
  .products .box-container {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-   gap: 1.5rem;                 /* jarak antar kotak sedikit diperbesar */
-   max-width: 1200px;           /* biar kotak tidak melebar terlalu jauh */
+   gap: 1.5rem;
+   max-width: 1200px;
    margin: 0 auto;
    padding: 0 10px;
  }
@@ -658,9 +658,9 @@ section{
    background: #fff;
    border: 1px solid #eee;
    padding: 10px;
-   text-align: center;
+   text-align: left; /* ganti dari center agar teks tidak menumpuk ke kanan */
    position: relative;
-   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
    transition: transform 0.2s ease;
    border-radius: 8px;
  }
@@ -669,13 +669,14 @@ section{
    transform: translateY(-5px);
  }
  
- /* Gambar buku: full width, fixed height, object-fit cover */
+ /* Gambar buku */
  .products .box .gambar {
-   width: 100%;                 /* ubah dari max-width:50% */
-   height: 240px;               /* tinggi statis agar rata */
+   width: 100%;
+   height: 240px;
    object-fit: cover;
    border-radius: 5px;
    margin-bottom: 12px;
+   display: block;
  }
  
  /* Harga badge */
@@ -685,19 +686,21 @@ section{
    left: 10px;
    background-color: red;
    color: white;
-   padding: 4px 8px;            /* sedikit diperkecil */
+   padding: 4px 8px;
    border-radius: 4px;
-   font-size: 1rem;             /* disesuaikan */
+   font-size: 1rem;
    font-weight: bold;
+   z-index: 1;
  }
  
  /* Nama buku */
  .products .box .nama_buku {
-   font-size: 1.1rem;           /* ukuran di-screnshot ~1.1rem */
+   font-size: 1.1rem;
    font-weight: 600;
    margin: 8px 0 4px;
    color: #333;
    text-transform: capitalize;
+   display: block;
  }
  
  /* Nama pengarang */
@@ -706,6 +709,7 @@ section{
    color: #666;
    margin-bottom: 8px;
    text-transform: lowercase;
+   display: block;
  }
  
  @media (max-width: 768px) {
@@ -713,13 +717,16 @@ section{
      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
      gap: 1rem;
    }
+ 
    .products .box .harga {
      font-size: 0.9rem;
      padding: 3px 6px;
    }
+ 
    .products .box .nama_buku {
      font-size: 1rem;
    }
+ 
    .products .box .nama_pengarang {
      font-size: 0.8rem;
    }
@@ -730,20 +737,21 @@ section{
      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
      gap: 0.8rem;
    }
+ 
    .products .box .harga {
      font-size: 0.8rem;
      padding: 2px 5px;
    }
+ 
    .products .box .nama_buku {
      font-size: 0.9rem;
    }
+ 
    .products .box .nama_pengarang {
      font-size: 0.8rem;
    }
  }
  
-
-
  /* css detail produk */
  .detail-container {
    max-width: 1000px;
