@@ -58,24 +58,23 @@ if (isset($_POST['add_to_cart'])) {
         </div>
     </section>
 
-    <section class="products">
+<section class="products">
    <h1 class="title" style="font-size: 2.5rem;">Cerita Terbaik Untuk Kamu</h1>
-
-   <div class="box-container" style=" grid-template-columns: repeat(4, 1fr);">
+   <div class="box-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; justify-items: center;">
 
       <?php  
          $select_products = mysqli_query($koneksi, "SELECT * FROM `produk` LIMIT 8") or die('query failed');
          if(mysqli_num_rows($select_products) > 0){
             while($fetch_products = mysqli_fetch_assoc($select_products)){
       ?>
-      <form action="" method="post" class="box"style="display: block; border: 1px solid #eee; padding: 10px; position: relative; border-radius: 8px;">
-         <a href="detail_produk.php?id=<?php echo $fetch_products['id']; ?>">
-            <img class="gambar" style="height: 350px; width: 100%;" src="img/<?php echo $fetch_products['gambar']; ?>" alt="">
-         </a>
-         <div class="nama_buku" style="font-size: 1.8rem;"><?php echo $fetch_products['nama_buku']; ?></div>
-         <div class="nama_pengarang" style="font-size: 1.5rem;"><?php echo $fetch_products['nama_pengarang']; ?></div>
-         <div class="harga" style="padding: 4px 8px; border-radius: 4px; font-size: 1.8rem;">Rp.<?php echo $fetch_products['harga']; ?></div>
-      </form>
+      <form action="" method="post" class="box" style="border: 1px solid #eee; padding: 10px; position: relative; border-radius: 8px; width: fit-content; display: flex; flex-direction: column; align-items: center;">
+      <a href="detail_produk.php?id=<?php echo $fetch_products['id']; ?>">
+      <img class="gambar" style="height: auto; width: 150px;" src="img/<?php echo $fetch_products['gambar']; ?>" alt="">
+      </a>
+      <div class="nama_buku" style="font-size: 1.8rem; text-align: center; margin: 0;"><?php echo $fetch_products['nama_buku']; ?></div>
+      <div class="nama_pengarang" style="font-size: 1.5rem; text-align: center; margin: 0;"><?php echo $fetch_products['nama_pengarang']; ?></div>
+      <div class="harga" style="padding: 4px 8px; border-radius: 4px; font-size: 1.5rem; background: red; color: white; position: absolute; top: 8px; left: 8px;">Rp.<?php echo $fetch_products['harga']; ?></div>
+</form>
       <?php
             }
          }else{
@@ -88,6 +87,7 @@ if (isset($_POST['add_to_cart'])) {
       <a href="shop.php" class="option-btn">load more</a>
    </div>
 </section>
+
 
 
 <section class="about">
