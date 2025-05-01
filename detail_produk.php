@@ -5,41 +5,52 @@ session_start();
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 // Ambil ID produk dari URL
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']); // sanitasi angka
-} else {
+if (!isset($_GET['id'])) {
     echo "ID produk tidak ditemukan di URL.";
     exit;
+}
+$id = intval($_GET['id']);
+// Proses Checkout
+if (isset($_POST['checkout'])) {
+  if (!$user_id) {
+      header('Location: loginregister.php');
+      exit;
+  }
+
+  // Ambil data yang dibutuhkan
+  $produk_id = intval($_POST['produk_id']);
+  $jumlah = intval($_POST['jumlah']);
+
+  // Redirect ke halaman checkout dengan parameter
+  header("Location: checkout.php?produk_id=$produk_id&jumlah=$jumlah");
+  exit;
 }
 
 // Proses tambah ke keranjang
 if (isset($_POST['masukkan'])) {
     if (!$user_id) {
-        // Jika belum login, redirect
         header('Location: loginregister.php');
         exit;
     }
 
-    // Ambil data dari form
-    $produk_id = mysqli_real_escape_string($koneksi, $_POST['produk_id']);
-    $nama_buku = mysqli_real_escape_string($koneksi, $_POST['nama_buku']);
-    $harga = mysqli_real_escape_string($koneksi, $_POST['harga']);
-    $gambar = mysqli_real_escape_string($koneksi, $_POST['gambar']);
-    $jumlah = intval($_POST['jumlah']); // pastikan integer
+    $produk_id = intval($_POST['produk_id']);
+    $jumlah = intval($_POST['jumlah']);
 
-    // Cek apakah produk sudah di keranjang
-    $check = mysqli_query($koneksi, "SELECT * FROM keranjang WHERE id = '$user_id' AND id = '$produk_id'");
-
+    // Cek apakah produk sudah ada di keranjang
+    $check = mysqli_query($koneksi, "SELECT * FROM keranjang WHERE user_id = '$user_id' AND produk_id = '$produk_id'");
     if (mysqli_num_rows($check) > 0) {
-        echo "<script>alert('Sudah ditambahkan ke keranjang!');</script>";
+        echo "<script>alert('Produk sudah ada di keranjang!');</script>";
     } else {
-        mysqli_query($koneksi, "INSERT INTO keranjang (id, produk_id, nama_buku, harga, jumlah, gambar) 
-            VALUES ('$user_id', '$produk_id', '$nama_buku', '$harga', '$jumlah', '$gambar')") 
-            or die(mysqli_error($koneksi));
-        echo "<script>alert('Produk ditambahkan ke keranjang!');</script>";
+        $insert = mysqli_query($koneksi, "INSERT INTO keranjang (user_id, produk_id, jumlah) VALUES ('$user_id', '$produk_id', '$jumlah')");
+        if ($insert) {
+            echo "<script>alert('Produk ditambahkan ke keranjang!');</script>";
+        } else {
+            echo "<script>alert('Gagal menambahkan ke keranjang: " . mysqli_error($koneksi) . "');</script>";
+        }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -74,7 +85,7 @@ if (isset($_POST['masukkan'])) {
         <input type="hidden" name="harga" value="<?php echo $produk['harga']; ?>">
         <input type="hidden" name="gambar" value="<?php echo $produk['gambar']; ?>">
         <input type="number" name="jumlah" value="1" min="1" class="qty-input">
-        <button type="submit" name="checkout" class="btn scheckout">Checkout</button>
+        <a href="checkout.php"><button type="submit" name="checkout" class="btn scheckout">Checkout</button></a>
         <button type="submit" name="masukkan" class="btn keranjang">Masukkan keranjang</button>
       </form>
     </div>

@@ -26,7 +26,7 @@ session_start();
 <?php include 'header.php'; ?>
 
 <div class="heading">
-   <h2>about us</h2>
+   <h2 style="font-size: 4rem;">ABOUT US</h2>
    <p> <a href="home.php">home</a> / about </p>
 </div>
 
