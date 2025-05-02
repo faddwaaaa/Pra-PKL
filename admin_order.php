@@ -1,5 +1,4 @@
 <?php
-
 include 'koneksi.php';
 session_start();
 
@@ -25,7 +24,6 @@ if (isset($_GET['delete'])) {
    header('location:admin_order.php');
    exit;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -42,56 +40,75 @@ if (isset($_GET['delete'])) {
 <?php include 'admin_header.php'; ?>
 
 <section class="orders">
-
    <h1 class="title">Data Pesanan</h1>
 
-   <div class="box-container">
    <?php
-   $select_orders = mysqli_query($koneksi, "SELECT o.*, p.metode_pembayaran 
+   $select_orders = mysqli_query($koneksi, "SELECT o.*, p.metode_pembayaran, p.bukti_pembayaran
       FROM orders o 
       LEFT JOIN pembayaran p ON o.id = p.orders_id 
       ORDER BY o.tanggal_pesanan DESC") or die('Query gagal');
-
+      
    if (mysqli_num_rows($select_orders) > 0) {
-      while ($fetch_orders = mysqli_fetch_assoc($select_orders)) {
+      echo '<table>
+            <tr>
+               <th>ID Pesanan</th>
+               <th>Tanggal</th>
+               <th>Alamat</th>
+               <th>Total Produk</th>
+               <th>Total Harga</th>
+               <th>Metode Pembayaran</th>
+               <th>Bukti Pembayaran</th>
+               <th>Status</th>
+               <th>Aksi</th>
+            </tr>';
 
-         // Hitung total produk
+      while ($fetch_orders = mysqli_fetch_assoc($select_orders)) {
          $order_id = $fetch_orders['id'];
          $produk_query = mysqli_query($koneksi, "SELECT SUM(jumlah) AS total_produk FROM detail_pesanan WHERE orders_id = '$order_id'");
          $produk = mysqli_fetch_assoc($produk_query);
          $total_produk = $produk['total_produk'] ?? 0;
-   ?>
-   <div class="box">
-      <p> User Id : <span><?= $fetch_orders['user_id']; ?></span> </p>
-      <p> Tanggal Pesanan : <span><?= date('d-M-Y', strtotime($fetch_orders['tanggal_pesanan'])); ?></span> </p>
-      <p> Alamat : <span><?= htmlspecialchars($fetch_orders['alamat_pengiriman']); ?></span> </p>
-      <p> Total Produk : <span><?= $total_produk ?></span> </p>
-      <p> Total Harga : <span>Rp.<?= number_format($fetch_orders['total_harga'], 0, ',', '.'); ?></span> </p>
-      <p> Metode Pembayaran : <span><?= $fetch_orders['metode_pembayaran'] ?? 'Tidak Diketahui'; ?></span> </p>
-      <p> Status Pesanan : <span><?= ucfirst($fetch_orders['status']); ?></span> </p>
 
-      <form action="" method="post">
-         <input type="hidden" name="order_id" value="<?= $fetch_orders['id']; ?>">
-         <select name="update_status" required>
-            <option value="" disabled selected>Pilih Status</option>
-            <option value="pending" <?= ($fetch_orders['status'] == 'pending') ? 'selected' : '' ?>>Pending</option>
-            <option value="diproses" <?= ($fetch_orders['status'] == 'diproses') ? 'selected' : '' ?>>Diproses</option>
-            <option value="dikirim" <?= ($fetch_orders['status'] == 'dikirim') ? 'selected' : '' ?>>Dikirim</option>
-            <option value="selesai" <?= ($fetch_orders['status'] == 'selesai') ? 'selected' : '' ?>>Selesai</option>
-            <option value="dibatalkan" <?= ($fetch_orders['status'] == 'dibatalkan') ? 'selected' : '' ?>>Dibatalkan</option>
-         </select>
-         <input type="submit" value="Update Status" name="update_order" class="option-btn">
-         <a href="admin_order.php?delete=<?= $fetch_orders['id']; ?>" onclick="return confirm('Hapus pesanan ini?');" class="delete-btn">Hapus</a>
-      </form>
-   </div>
-   <?php
+         $bukti_pembayaran = $fetch_orders['bukti_pembayaran'];
+         $bukti_display = $bukti_pembayaran 
+            ? '<img src="uploads/' . htmlspecialchars($bukti_pembayaran) . '" alt="Bukti" class="bukti-preview">'
+            : 'Belum ada';
+
+         echo '<tr>';
+         echo '<td>' . $order_id . '</td>';
+         echo '<td>' . date('d-M-Y', strtotime($fetch_orders['tanggal_pesanan'])) . '</td>';
+         echo '<td>' . htmlspecialchars($fetch_orders['alamat_pengiriman']) . '</td>';
+         echo '<td>' . $total_produk . '</td>';
+         echo '<td>Rp ' . number_format($fetch_orders['total_harga'], 0, ',', '.') . '</td>';
+         echo '<td>' . htmlspecialchars($fetch_orders['metode_pembayaran'] ?? 'Tidak Diketahui') . '</td>';
+         echo '<td>' . $bukti_display . '</td>';
+         echo '<td>';
+
+         echo '<form action="" method="post">';
+         echo '<input type="hidden" name="order_id" value="' . $order_id . '">';
+         $disabled = empty($bukti_pembayaran) ? 'disabled' : '';
+         echo '<select name="update_status" onchange="this.form.submit()" ' . $disabled . '>';
+         echo '<option value="pending"' . ($fetch_orders['status'] == 'pending' ? ' selected' : '') . '>Pending</option>';
+         echo '<option value="dikirim"' . ($fetch_orders['status'] == 'dikirim' ? ' selected' : '') . '>Dikirim</option>';
+         echo '<option value="selesai"' . ($fetch_orders['status'] == 'selesai' ? ' selected' : '') . '>Selesai</option>';
+         echo '<option value="dibatalkan"' . ($fetch_orders['status'] == 'dibatalkan' ? ' selected' : '') . '>Dibatalkan</option>';
+         echo '</select>';
+         echo '<input type="hidden" name="update_order" value="1">';
+         echo '</form>';
+
+         if (empty($bukti_pembayaran)) {
+            echo "<small style='color:red;'>Upload bukti terlebih dahulu</small>";
+         }
+
+         echo '</td>';
+         echo '<td><a href="?delete=' . $order_id . '" onclick="return confirm(\'Yakin ingin menghapus pesanan ini?\')" class="delete-btn">Hapus</a></td>';
+         echo '</tr>';
       }
+
+      echo '</table>';
    } else {
       echo '<p class="empty">Belum ada pesanan yang masuk!</p>';
    }
    ?>
-   </div>
-
 </section>
 
 <script src="js/admin_script.js"></script>

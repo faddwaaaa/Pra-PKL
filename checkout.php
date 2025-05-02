@@ -287,57 +287,64 @@ button[type="submit"]:hover {
 </div>
 
 <section class="checkout-section">
-<form method="post">
-   <h2 style="text-transform: uppercase;>Konfirmasi Pesanan</h2>
+    <form method="post" enctype="multipart/form-data">
+        <h2>Konfirmasi Pesanan</h2>
 
-   <div class="form-group">
-      <label>Alamat:</label>
-      <input type="text" name="alamat" placeholder="Alamat lengkap" required>
-   </div>
+        <div class="form-group">
+            <label>Alamat:</label>
+            <input type="text" name="alamat" placeholder="Alamat lengkap" required>
+        </div>
 
-   <div class="form-group">
-      <label>Produk:</label>
-      <div class="produk-container">
-         <?php foreach($produk_checkout as $produk): ?>
-            <div class="produk-item">
-               <img src="img/<?= $produk['gambar'] ?>" alt="<?= $produk['nama_buku'] ?>">
-               <p><?= $produk['nama_buku'] ?></p>
-               <p class="harga">Rp<?= number_format($produk['harga'], 0, ',', '.') ?> x <?= $produk['jumlah'] ?></p>
+        <div class="form-group">
+            <label>Produk:</label>
+            <div class="produk-container">
+                <?php foreach($produk_checkout as $produk): ?>
+                    <div class="produk-item">
+                        <img src="img/<?= $produk['gambar'] ?>" alt="<?= $produk['nama_buku'] ?>">
+                        <p><?= $produk['nama_buku'] ?></p>
+                        <p class="harga">Rp.<?= number_format($produk['harga'], 0, ',', '.') ?> x <?= $produk['jumlah'] ?></p>
+                    </div>
+                <?php endforeach; ?>
             </div>
-         <?php endforeach; ?>
-      </div>
-   </div>
+        </div>
 
-   <div class="subtotal-info">
-      <p><strong>Ongkir:</strong> Rp10.000</p>
-      <p><strong>SubTotal:</strong> Rp<?= number_format($total_checkout, 0, ',', '.') ?></p>
-   </div>
+        <div class="subtotal-info">
+            <p><strong>Ongkir:</strong> Rp.10.000</p>
+            <p><strong>SubTotal:</strong> Rp.<?= number_format($total_checkout, 0, ',', '.') ?></p>
+        </div>
 
-   <div class="form-group">
-      <label>Metode Pembayaran:</label>
-      <select name="metode" id="metode" onchange="showRekening()" required>
-         <option value="">Pilih</option>
-         <option value="DANA">DANA</option>
-         <option value="BCA">BCA</option>
-         <option value="OVO">OVO</option>
-         <option value="COD">Cash On Delivery</option>
-      </select>
-   </div>
+        <div class="form-group">
+            <label>Metode Pembayaran:</label>
+            <select name="metode" id="metode" onchange="showRekening()" required>
+                <option value="">Pilih</option>
+                <option value="DANA">DANA</option>
+                <option value="BCA">BCA</option>
+                <option value="OVO">OVO</option>
+                <option value="COD">Cash On Delivery</option>
+            </select>
+        </div>
 
-   <?php if (isset($_GET['produk_id'])): ?>
-      <input type="hidden" name="produk_id" value="<?= intval($_GET['produk_id']) ?>">
-      <input type="hidden" name="jumlah" value="<?= intval($_GET['jumlah']) ?>">
-   <?php endif; ?>
+        <div class="form-group">
+            <label>Upload Bukti Pembayaran:</label>
+            <input type="file" name="bukti" accept="image/*" required>
+        </div>
 
-   <button type="submit" name="buat_pesanan">Buat Pesanan</button>
-</form>
+        <?php if (isset($_GET['produk_id'])): ?>
+            <input type="hidden" name="produk_id" value="<?= intval($_GET['produk_id']) ?>">
+            <input type="hidden" name="jumlah" value="<?= intval($_GET['jumlah']) ?>">
+        <?php endif; ?>
 
-<div id="popup-rekening">
-    <h3 id="judul-metode">Metode</h3>
-    <p id="rekening-text">Nomor virtual muncul di sini</p>
-    <button onclick="tutupPopup()">OKE</button>
-</div>
-   </section>
+        <button type="submit" name="buat_pesanan">Buat Pesanan</button>
+    </form>
+
+    <!-- Popup Rekening -->
+    <div id="popup-rekening" style="display:none;">
+        <h3 id="judul-metode">Metode</h3>
+        <p id="rekening-text">Nomor virtual muncul di sini</p>
+        <button onclick="document.getElementById('popup-rekening').style.display='none'">OKE</button>
+    </div>
+</section>
+
 
 <?php include 'footer.php'; ?>
 <script src="js/script.js"></script>

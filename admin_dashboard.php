@@ -47,7 +47,7 @@ $admin_id = $_SESSION['admin_id']; // id dari user yang role-nya 'admin'
                $total_penjualan = $fetch_total['total_penjualan']??0;
             }
             ?>
-         <h3>Rp.<?php echo $total_penjualan; ?></h3>
+         <h3 style="font-size:3.5rem;">Rp.<?php echo $total_penjualan; ?></h3>
          <p>Total Penjualan</p>
       </div>
 
@@ -60,7 +60,7 @@ $admin_id = $_SESSION['admin_id']; // id dari user yang role-nya 'admin'
             $total_pesanan = $fetch_pesanan['total_pesanan'] ?? 0;
          }
       ?>
-         <h3><?php echo $total_pesanan; ?></h3>
+         <h3 style="font-size:3.5rem;">Rp.<?php echo $total_pesanan; ?></h3>
          <a href="admin_order.php"><p>Pesanan Dikirim/Diproses</p></a>
       </div>
 

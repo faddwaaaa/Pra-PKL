@@ -267,7 +267,7 @@ section{
 }
 
 .dashboard .box-container .box h3{
-   font-size: 5rem;
+   font-size: 4rem;
    color:var(--black); 
 }
 
@@ -276,7 +276,7 @@ section{
    padding:1.5rem;
    background-color: var(--light-bg);
    color:#8B5E3C;
-   font-size: 2rem;
+   font-size: 1.5rem;
    border-radius: .5rem;
    border:var(--border);
 }
@@ -416,7 +416,7 @@ section{
    width: 100%;
 }
 
-.orders .box-container{
+/* .orders .box-container{
    display: grid;
    grid-template-columns: repeat(auto-fit, 30rem);
    justify-content: center;
@@ -457,7 +457,7 @@ section{
    padding:1.2rem 1.4rem;
    font-size: 1.8rem;
    color:var(--black);
-}
+} */
 
 /* .users .box-container{
    display: grid;
