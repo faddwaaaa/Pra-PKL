@@ -61,6 +61,16 @@ if (isset($_POST['masukkan'])) {
 </head>
 <body>
 
+
+<?php include 'header.php'; ?>
+
+<div class="heading">
+   <h3>Detail Produk</h3>
+   <p> <a href="home.php">home</a> / detail</p> 
+</div>
+
+
+
 <div class="detail-container">
   <h3>DETAIL PRODUK</h3>
 
@@ -74,20 +84,29 @@ if (isset($_POST['masukkan'])) {
       <img class="gambar_produk" src="img/<?php echo $produk['gambar']; ?>" alt="">
     </div>
     <div class="info">
-      <h3><?php echo $produk['nama_buku']; ?></h3>
+      <h3 style = "font-size: 3rem;"><?php echo $produk['nama_buku']; ?></h3>
       <p class="nama_pengarang"><?php echo $produk['nama_pengarang']; ?></p>
       <p class="harga">Rp. <?php echo number_format($produk['harga'], 0, ',', '.'); ?></p>
-      <p class="deskripsi"><?php echo $produk['deskripsi']; ?> </p>
+      <p class="stok" style = "font-size: 1.3rem;">Stok : <?php echo $produk['stok']; ?></p>
+      <p class="deskripsi" style = "font-size: 1.5rem;"><?php echo $produk['deskripsi']; ?> </p>
 
-      <form action="" method="post">
-        <input type="hidden" name="produk_id" value="<?php echo $produk['id']; ?>">
-        <input type="hidden" name="nama_buku" value="<?php echo $produk['nama_buku']; ?>">
-        <input type="hidden" name="harga" value="<?php echo $produk['harga']; ?>">
-        <input type="hidden" name="gambar" value="<?php echo $produk['gambar']; ?>">
-        <input type="number" name="jumlah" value="1" min="1" class="qty-input">
-        <a href="checkout.php"><button type="submit" name="checkout" class="btn scheckout">Checkout</button></a>
-        <button type="submit" name="masukkan" class="btn keranjang">Masukkan keranjang</button>
-      </form>
+      <?php if ($produk['stok'] > 0): ?>
+  <form action="" method="post">
+    <input type="hidden" name="produk_id" value="<?php echo $produk['id']; ?>">
+    <input type="hidden" name="nama_buku" value="<?php echo $produk['nama_buku']; ?>">
+    <input type="hidden" name="harga" value="<?php echo $produk['harga']; ?>">
+    <input type="hidden" name="stok" value="<?php echo $produk['stok']; ?>">
+    <input type="hidden" name="gambar" value="<?php echo $produk['gambar']; ?>">
+    <input type="number" name="jumlah" value="1" min="1" max="<?php echo $produk['stok']; ?>" class="qty-input">
+    <button type="submit" name="checkout" class="btn scheckout">Checkout</button>
+    <button type="submit" name="masukkan" class="btn keranjang">Masukkan keranjang</button>
+  </form>
+<?php else: ?>
+  <p style="color: red; font-weight: bold;">Stok habis. Tidak dapat membeli saat ini.</p>
+<?php endif; ?>
+
+
+
     </div>
   <?php  }  else { ?>
     <p class="empty">Produk tidak ditemukan!</p>

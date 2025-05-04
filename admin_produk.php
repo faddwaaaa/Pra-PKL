@@ -54,10 +54,11 @@ if(isset($_POST['add_product'])){
     $update_p_id = $_POST['update_p_id'];
     $update_name = $_POST['update_name'];
     $update_price = $_POST['update_price'];
+    $update_stok = $_POST['update_stok'];
     $update_nama_pengarang = $_POST['update_nama_pengarang'];
     $update_deskripsi = $_POST['update_deskripsi'];
  
-    mysqli_query($koneksi, "UPDATE `produk` SET nama_buku = '$update_name', harga = '$update_price', nama_pengarang = '$update_nama_pengarang', deskripsi = '$update_deskripsi'  WHERE id = '$update_p_id'") or die('query failed');
+    mysqli_query($koneksi, "UPDATE `produk` SET nama_buku = '$update_name', harga = '$update_price', stok = '$update_stok', nama_pengarang = '$update_nama_pengarang', deskripsi = '$update_deskripsi'  WHERE id = '$update_p_id'") or die('query failed');
  
     $update_image = $_FILES['update_image']['nama_buku'];
     $update_image_tmp_name = $_FILES['update_image']['tmp_name'];
@@ -110,6 +111,7 @@ if(isset($_POST['add_product'])){
       <h3>Tambahkan Produk</h3>
       <input type="text" name="nama_buku" class="box" placeholder="masukkan judul buku" required>
       <input type="number" min="0" name="harga" class="box" placeholder="masukkan harga" required>
+      <input type="number" min="0" name="stok" class="box" placeholder="masukkan stok" required>
       <input type="text" name="nama_pengarang" class="box" placeholder="masukkan nama pengarang" required>
       <input type="text" name="deskripsi" class="box" placeholder="masukkan deskripsi" required>
       <input type="file" name="gambar" accept="img/jpg, img/jpeg, img/png" class="box" required>
@@ -140,6 +142,9 @@ if(isset($_POST['add_product'])){
 
       <!-- Harga -->
       <div class="price">Rp.<?php echo $fetch_products['harga']; ?></div>
+
+       <!-- stok -->
+       <div class="stok" style = "font-size: 1.3rem;">Stok : <?php echo $fetch_products['stok']; ?></div>
 
       <!-- Deskripsi -->
       <div class="deskripsi"><?php echo $fetch_products['deskripsi']; ?></div>
@@ -172,7 +177,13 @@ if(isset($_POST['add_product'])){
       <input type="hidden" name="update_old_image" value="<?php echo $fetch_update['gambar']; ?>">
       <img src="img/<?php echo $fetch_update['gambar']; ?>" alt="">
       <input type="text" name="update_name" value="<?php echo $fetch_update['nama_buku']; ?>" class="box" required placeholder="masukkan nama">
-      <input type="number" name="update_price" value="<?php echo $fetch_update['harga']; ?>" min="0" class="box" required placeholder="masukkan harga">
+
+      <div class="flex-input"  style = "display: flex; gap: 1rem; justify-content: space-between;">
+   <input type="number" name="update_price" value="<?php echo $fetch_update['harga']; ?>" min="0" class="box" style = "flex: 1; margin: 1rem 0;" required placeholder="masukkan harga">
+   <input type="number" name="update_stok" value="<?php echo $fetch_update['stok']; ?>" min="0" class="box" style = "flex: 1; margin: 1rem 0;" required placeholder="masukkan stok">
+</div>
+
+
       <input type="text" name="update_nama_pengarang" value="<?php echo $fetch_update['nama_pengarang']; ?>" class="box" required placeholder="masukkan nama_pengarang">
       <input type="text" name="update_deskripsi" value="<?php echo $fetch_update['deskripsi']; ?>" class="box" required placeholder="masukkan deskripsi">
 

@@ -416,6 +416,18 @@ section{
    width: 100%;
 }
 
+.edit-product-form form .flex-input {
+   display: flex;
+   gap: 1rem;
+   justify-content: space-between;
+}
+
+.edit-product-form form .flex-input .box {
+   flex: 1;
+   margin: 1rem 0; /* pastikan jarak vertikal tetap ada */
+}
+
+
 /* .orders .box-container{
    display: grid;
    grid-template-columns: repeat(auto-fit, 30rem);

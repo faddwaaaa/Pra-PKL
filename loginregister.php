@@ -6,59 +6,64 @@ include 'koneksi.php';
 // Proses Registrasi
 if (isset($_POST['submit_register'])) {
 
-   $nama = mysqli_real_escape_string($koneksi, $_POST['nama']);
-   $email = mysqli_real_escape_string($koneksi, $_POST['email']);
-   $password = mysqli_real_escape_string($koneksi, md5($_POST['password']));
-   $user_type = $_POST['role'];
+  $nama = mysqli_real_escape_string($koneksi, $_POST['nama']);
+  $email = mysqli_real_escape_string($koneksi, $_POST['email']);
+  $password = mysqli_real_escape_string($koneksi, md5($_POST['password']));
 
-   $select_users = mysqli_query($koneksi, "SELECT * FROM `user` WHERE email = '$email' AND password = '$password'") or die(mysqli_error($koneksi));;
+  // Registrasi default sebagai user
+  $user_type = 'user';
 
-   if (mysqli_num_rows($select_users) > 0) {
-      $message[] = 'Pengguna sudah ada!';
-    } else {
-         mysqli_query($koneksi, "INSERT INTO `user`(nama, email, password, user_type) VALUES('$nama', '$email', '$password', '$user_type')") or die(mysqli_error($koneksi));;
-         $message[] = 'Berhasil Terdaftar!';
-         header('location:loginregister.php');
-      }
-   }
+  $select_users = mysqli_query($koneksi, "SELECT * FROM `user` WHERE email = '$email'") or die(mysqli_error($koneksi));
+
+  if (mysqli_num_rows($select_users) > 0) {
+     $message[] = 'Pengguna sudah ada!';
+  } else {
+     mysqli_query($koneksi, "INSERT INTO `user`(nama, email, password, user_type) VALUES('$nama', '$email', '$password', '$user_type')") or die(mysqli_error($koneksi));
+     $message[] = 'Berhasil Terdaftar!';
+     header('location:loginregister.php');
+     exit();
+  }
+}
+
 
 
 // Proses Login
 if (isset($_POST['submit_login'])) {
 
-   $email = mysqli_real_escape_string($koneksi, $_POST['email']);
-   $password = mysqli_real_escape_string($koneksi, md5($_POST['password']));
+  $email = mysqli_real_escape_string($koneksi, $_POST['email']);
+  $password = mysqli_real_escape_string($koneksi, md5($_POST['password']));
 
-   $select_users = mysqli_query($koneksi, "SELECT * FROM `user` WHERE email = '$email' AND password = '$password'") or die(mysqli_error($koneksi));;
+  $select_users = mysqli_query($koneksi, "SELECT * FROM `user` WHERE email = '$email' AND password = '$password'") or die(mysqli_error($koneksi));
 
-   if (mysqli_num_rows($select_users) > 0) {
+  if (mysqli_num_rows($select_users) > 0) {
+     $row = mysqli_fetch_assoc($select_users);
 
-      $row = mysqli_fetch_assoc($select_users);
-      if($row['user_type'] == 'admin'){
+     $_SESSION['user_id'] = $row['id'];
+     $_SESSION['user_name'] = $row['nama'];
+     $_SESSION['user_email'] = $row['email'];
+     $_SESSION['user_type'] = $row['user_type'];
 
-        $_SESSION['admin_name'] = $row['nama'];
-        $_SESSION['admin_email'] = $row['email'];
-        $_SESSION['admin_id'] = $row['id'];
-        $_SESSION['user_type'] = 'admin';
-        header('location:admin_dashboard.php');
-        exit();
 
-     }else if($row['user_type'] == 'user'){
-
-        $_SESSION['user_name'] = $row['nama'];
-        $_SESSION['user_email'] = $row['email'];
-        $_SESSION['user_id'] = $row['id'];
-        $_SESSION['user_type'] = 'user';
-        header('location:home.php');
-        exit();
-
-     }
+  if (trim($row['user_type']) === 'admin') {
+      $_SESSION['admin_id'] = $row['id'];
+      $_SESSION['admin_name'] = $row['nama'];
+      $_SESSION['admin_email'] = $row['email'];
+      header('location:admin_dashboard.php');
+      exit();
    } else {
-      $message[] = 'Email atau kata sandi salah!';
-   }
+        header('location:home.php');
+     }
+     exit();
 
+    //  if (trim($row['user_type']) === 'admin') {
+    //     header('location:admin_dashboard.php');
+    //  } else {
+    //     header('location:home.php');
+    //  }
+    //  exit();
+     $message[] = 'Email atau kata sandi salah!';
+  }
 }
-
 ?>
 
 
@@ -117,12 +122,6 @@ if (isset($message)) {
               <input type="password" name="password" placeholder="Password" required/>
             </div>
     
-            <div class="input-box">
-              <select name="role" class="custom-select" required>
-              <option value="user" selected>User</option>
-              <option value="admin">Admin</option>
-              </select>
-            </div>
             <input type="submit" name="submit_register" class="btn" value="Simpan" />
           </form>
         </div>
