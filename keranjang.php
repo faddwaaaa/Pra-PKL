@@ -45,6 +45,7 @@ if(isset($_GET['delete_all'])){
    <link rel="stylesheet" href="css/style.css">
 
 </head>
+
 <body>
    
 <?php include 'header.php'; ?>
@@ -70,10 +71,29 @@ if(isset($_GET['delete_all'])){
          <img src="img/<?php echo $fetch_cart['gambar']; ?>" alt="">
          <div class="nama_buku" style="font-size: 2.3rem;"><?php echo $fetch_cart['nama_buku']; ?></div>
          <div class="harga">Rp.<?php echo $fetch_cart['harga']; ?></div>
+
          <form action="" method="post">
             <input type="hidden" name="id" value="<?php echo $fetch_cart['id']; ?>">
-            <input type="number" min="1" name="jumlah" value="<?php echo $fetch_cart['jumlah']; ?>">
-            <input type="submit" name="update_cart" value="update" class="option-btn">
+            <!-- <input type="number" min="1" name="jumlah" value=""> -->
+            <div class="quantity-control" data-id="<?php echo $fetch_cart['id']; ?>" data-harga="<?php echo $fetch_cart['harga']; ?>">    
+               <button style="padding: 6px 15px;
+                  font-size: 18px;
+                  background-color: #8B5E3C;
+                  color: white;
+                  border: none;
+                  border-radius: 6px;
+                  cursor: pointer;"class="minus">-</button>
+               <span style="font-size: 18px;
+                  min-width: 30px;
+                  text-align: center;"class="quantity"><?php echo $fetch_cart['jumlah']; ?></span>
+               <button style="  padding: 6px 15px;
+                  font-size: 18px;
+                  background-color: #8B5E3C;
+                  color: white;
+                  border: none;
+                  border-radius: 6px;
+                  cursor: pointer;"class="plus">+</button>
+            </div>
          </form>
          <div class="sub-total"> sub total : <span>Rp.<?php echo $sub_total = ($fetch_cart['jumlah'] * $fetch_cart['harga']); ?></span> </div>
       </div>
@@ -91,7 +111,7 @@ if(isset($_GET['delete_all'])){
    </div>
 
    <div class="cart-total">
-      <p>Jumlah Total : <span>Rp.<?php echo $grand_total; ?></span></p>
+   <p>Jumlah Total : <span id="grand-total">Rp.<?php echo $grand_total; ?></span></p>
       <div class="flex">
          <a href="shop.php" class="option-btn">Lanjutkan Belanja</a>
          <a href="checkout.php" class="option-btn <?php echo ($grand_total > 1)?'':'disabled'; ?>">Checkout</a>
@@ -110,7 +130,63 @@ if(isset($_GET['delete_all'])){
 <?php include 'footer.php'; ?>
 
 <!-- custom js file link  -->
-<script src="js/script.js"></script>
+<script>
+document.querySelectorAll('.quantity-control').forEach(control => {
+   const minusBtn = control.querySelector('.minus');
+   const plusBtn = control.querySelector('.plus');
+   const quantitySpan = control.querySelector('.quantity');
+   const box = control.closest('.box');
+   const subTotalSpan = box.querySelector('.sub-total span');
+   const harga = parseInt(control.dataset.harga); // Harga harus berupa angka
+   const cartId = control.dataset.id;
+
+   minusBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      let qty = parseInt(quantitySpan.textContent);
+      if (qty > 1) {
+         qty--;
+         updateQty(qty);
+      }
+   });
+
+   plusBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      let qty = parseInt(quantitySpan.textContent);
+      qty++;
+      updateQty(qty);
+   });
+
+   function updateQty(qty) {
+   quantitySpan.textContent = qty;
+   const subTotal = qty * harga;
+   subTotalSpan.textContent = 'Rp.' + subTotal.toLocaleString('id-ID');
+
+   // Simpan ke database
+   fetch('update_qty.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `id=${cartId}&jumlah=${qty}`
+   });
+
+   // Update grand total
+   updateGrandTotal();
+}
+
+   function updateGrandTotal() {
+   let grandTotal = 0;
+   document.querySelectorAll('.sub-total span').forEach(span => {
+      const subTotalStr = span.textContent.replace(/[^\d]/g, '');
+      grandTotal += parseInt(subTotalStr);
+   });
+   document.getElementById('grand-total').textContent = 'Rp.' + grandTotal.toLocaleString('id-ID');
+}
+
+
+
+});
+
+</script>
+
 
 </body>
 </html>

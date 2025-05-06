@@ -57,7 +57,21 @@ if(isset($message)){
                $select_cart_number = mysqli_query($koneksi, "SELECT * FROM `keranjang` WHERE user_id = '$user_id'") or die('query failed');
                $cart_rows_number = mysqli_num_rows($select_cart_number); 
             ?>
-            <a href="keranjang.php"> <i class="fas fa-shopping-cart"></i> <span>(<?php echo $cart_rows_number; ?>)</span> </a>
+            <a href="keranjang.php" style="position: relative;">
+               <i class="fas fa-shopping-cart"></i>
+               <span style="
+                  font-size: 1.2rem;
+                  position: absolute;
+                  top: -10px;
+                  right: -10px;
+                  background: red;
+                  color: white;
+                  padding: 2px 6px;
+                  border-radius: 50%;
+               ">
+                  <?php echo $cart_rows_number; ?>
+               </span>
+             </a>
         </div>
     
       <?php if ($user_id){ ?>
