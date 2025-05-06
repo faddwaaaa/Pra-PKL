@@ -34,6 +34,48 @@ if (isset($_GET['delete'])) {
    <title>Pesanan (Admin)</title>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
    <link rel="stylesheet" href="css/admin_style.css">
+   <style>
+      /* Tambahan style untuk bukti pembayaran */
+      .bukti-preview {
+         width: 80px;
+         height: 80px;
+         object-fit: cover;
+         cursor: pointer;
+         border: 1px solid #ddd;
+         border-radius: 4px;
+         transition: 0.3s;
+      }
+      .bukti-preview:hover {
+         opacity: 0.7;
+      }
+      
+      /* Modal untuk tampilan full size */
+      .modal {
+         display: none;
+         position: fixed;
+         z-index: 1000;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         background-color: rgba(0,0,0,0.9);
+      }
+      .modal-content {
+         display: block;
+         margin: 5% auto;
+         max-width: 80%;
+         max-height: 80%;
+      }
+      .close {
+         position: absolute;
+         top: 15px;
+         right: 35px;
+         color: #f1f1f1;
+         font-size: 40px;
+         font-weight: bold;
+         cursor: pointer;
+      }
+   </style>
 </head>
 <body>
 
@@ -69,8 +111,10 @@ if (isset($_GET['delete'])) {
          $total_produk = $produk['total_produk'] ?? 0;
 
          $bukti_pembayaran = $fetch_orders['bukti_pembayaran'];
+         
+         // Perbaikan path gambar dan tampilan
          $bukti_display = $bukti_pembayaran 
-            ? '<img src="uploads/' . htmlspecialchars($bukti_pembayaran) . '" alt="Bukti" class="bukti-preview">'
+            ? '<img src="' . htmlspecialchars($bukti_pembayaran) . '" alt="Bukti Pembayaran" class="bukti-preview" onclick="openModal(\'' . htmlspecialchars($bukti_pembayaran) . '\')">'
             : 'Belum ada';
 
          echo '<tr>';
@@ -111,6 +155,31 @@ if (isset($_GET['delete'])) {
    ?>
 </section>
 
+<!-- Modal untuk tampilan full size -->
+<div id="imageModal" class="modal">
+   <span class="close" onclick="closeModal()">&times;</span>
+   <img class="modal-content" id="modalImage">
+</div>
+
 <script src="js/admin_script.js"></script>
+<script>
+// Fungsi untuk menampilkan modal gambar
+function openModal(imageSrc) {
+   document.getElementById('imageModal').style.display = 'block';
+   document.getElementById('modalImage').src = imageSrc;
+}
+
+// Fungsi untuk menutup modal
+function closeModal() {
+   document.getElementById('imageModal').style.display = 'none';
+}
+
+// Tutup modal ketika klik di luar gambar
+window.onclick = function(event) {
+   if (event.target == document.getElementById('imageModal')) {
+      closeModal();
+   }
+}
+</script>
 </body>
 </html>
