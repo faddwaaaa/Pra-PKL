@@ -109,12 +109,14 @@ if (isset($_GET['delete'])) {
          $produk_query = mysqli_query($koneksi, "SELECT SUM(jumlah) AS total_produk FROM detail_pesanan WHERE orders_id = '$order_id'");
          $produk = mysqli_fetch_assoc($produk_query);
          $total_produk = $produk['total_produk'] ?? 0;
-
+         
          $bukti_pembayaran = $fetch_orders['bukti_pembayaran'];
+         $folder_bukti = 'bukti/'; // contoh folder tempat gambar disimpan
+         $gambar_path = $folder_bukti . $bukti_pembayaran;
          
          // Perbaikan path gambar dan tampilan
          $bukti_display = $bukti_pembayaran 
-            ? '<img src="' . htmlspecialchars($bukti_pembayaran) . '" alt="Bukti Pembayaran" class="bukti-preview" onclick="openModal(\'' . htmlspecialchars($bukti_pembayaran) . '\')">'
+            ? '<img src="' . htmlspecialchars($gambar_path) . '" alt="Bukti Pembayaran" class="bukti-preview" onclick="openModal(\'' . htmlspecialchars($gambar_path) . '\')">'
             : 'Belum ada';
 
          echo '<tr>';
@@ -132,6 +134,7 @@ if (isset($_GET['delete'])) {
          $disabled = empty($bukti_pembayaran) ? 'disabled' : '';
          echo '<select name="update_status" onchange="this.form.submit()" ' . $disabled . '>';
          echo '<option value="pending"' . ($fetch_orders['status'] == 'pending' ? ' selected' : '') . '>Pending</option>';
+         echo '<option value="diproses"' . ($fetch_orders['status'] == 'diproses' ? ' selected' : '') . '>Diproses</option>';
          echo '<option value="dikirim"' . ($fetch_orders['status'] == 'dikirim' ? ' selected' : '') . '>Dikirim</option>';
          echo '<option value="selesai"' . ($fetch_orders['status'] == 'selesai' ? ' selected' : '') . '>Selesai</option>';
          echo '<option value="dibatalkan"' . ($fetch_orders['status'] == 'dibatalkan' ? ' selected' : '') . '>Dibatalkan</option>';

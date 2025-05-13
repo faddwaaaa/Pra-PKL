@@ -65,6 +65,8 @@ if(isset($_GET['delete_all'])){
          $select_cart = mysqli_query($koneksi, "SELECT keranjang.*, produk.nama_buku, produk.harga, produk.gambar FROM keranjang JOIN produk ON keranjang.produk_id = produk.id WHERE keranjang.user_id = '$user_id'") or die('query failed');
          if(mysqli_num_rows($select_cart) > 0){
             while($fetch_cart = mysqli_fetch_assoc($select_cart)){   
+               $sub_total = ($fetch_cart['jumlah'] * $fetch_cart['harga']);
+               $grand_total += $sub_total; 
       ?>
       <div class="box">
          <a href="keranjang.php?delete=<?php echo $fetch_cart['id']; ?>" class="fas fa-times" onclick="return confirm('Hapus ini dari keranjang?');"></a>
@@ -98,7 +100,6 @@ if(isset($_GET['delete_all'])){
          <div class="sub-total"> sub total : <span>Rp.<?php echo $sub_total = ($fetch_cart['jumlah'] * $fetch_cart['harga']); ?></span> </div>
       </div>
       <?php
-      $grand_total += $sub_total;
          }
       }else{
          echo '<p class="empty">Keranjang kamu kosong</p>';
@@ -137,7 +138,7 @@ document.querySelectorAll('.quantity-control').forEach(control => {
    const quantitySpan = control.querySelector('.quantity');
    const box = control.closest('.box');
    const subTotalSpan = box.querySelector('.sub-total span');
-   const harga = parseInt(control.dataset.harga); // Harga harus berupa angka
+   const harga = parseInt(control.dataset.harga);
    const cartId = control.dataset.id;
 
    minusBtn.addEventListener('click', (e) => {
@@ -146,6 +147,14 @@ document.querySelectorAll('.quantity-control').forEach(control => {
       if (qty > 1) {
          qty--;
          updateQty(qty);
+      } else if (qty === 1) {
+         if (confirm('Jumlah 0, hapus dari keranjang?')) {
+            // Hapus item dari tampilan (opsional)
+            box.remove();
+            // Hapus dari database
+            fetch(`keranjang.php?delete=${cartId}`)
+               .then(() => updateGrandTotal());
+         }
       }
    });
 
@@ -157,34 +166,29 @@ document.querySelectorAll('.quantity-control').forEach(control => {
    });
 
    function updateQty(qty) {
-   quantitySpan.textContent = qty;
-   const subTotal = qty * harga;
-   subTotalSpan.textContent = 'Rp.' + subTotal.toLocaleString('id-ID');
+      quantitySpan.textContent = qty;
+      const subTotal = qty * harga;
+      subTotalSpan.textContent = 'Rp.' + subTotal.toLocaleString('id-ID');
 
-   // Simpan ke database
-   fetch('update_qty.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `id=${cartId}&jumlah=${qty}`
-   });
+      // Simpan ke database
+      fetch('update_qty.php', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+         body: `id=${cartId}&jumlah=${qty}`
+      });
 
-   // Update grand total
-   updateGrandTotal();
-}
+      updateGrandTotal();
+   }
 
    function updateGrandTotal() {
-   let grandTotal = 0;
-   document.querySelectorAll('.sub-total span').forEach(span => {
-      const subTotalStr = span.textContent.replace(/[^\d]/g, '');
-      grandTotal += parseInt(subTotalStr);
-   });
-   document.getElementById('grand-total').textContent = 'Rp.' + grandTotal.toLocaleString('id-ID');
-}
-
-
-
+      let grandTotal = 0;
+      document.querySelectorAll('.sub-total span').forEach(span => {
+         const subTotalStr = span.textContent.replace(/[^\d]/g, '');
+         grandTotal += parseInt(subTotalStr || 0);
+      });
+      document.getElementById('grand-total').textContent = 'Rp.' + grandTotal.toLocaleString('id-ID');
+   }
 });
-
 </script>
 
 

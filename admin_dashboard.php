@@ -54,13 +54,13 @@ $admin_id = $_SESSION['admin_id']; // id dari user yang role-nya 'admin'
       <div class="box">
       <?php
          $total_pesanan = 0;
-         $select_pesanan = mysqli_query($koneksi, "SELECT SUM(total_harga) AS total_pesanan FROM orders WHERE status IN ('diproses', 'dikirim')") or die('query failed');
+         $select_pesanan = mysqli_query($koneksi, "SELECT COUNT(*) AS jumlah_pesanan FROM orders WHERE status IN ('diproses', 'dikirim')") or die('query failed');
          if(mysqli_num_rows($select_pesanan) > 0){
             $fetch_pesanan = mysqli_fetch_assoc($select_pesanan);
-            $total_pesanan = $fetch_pesanan['total_pesanan'] ?? 0;
+            $total_pesanan = $fetch_pesanan['jumlah_pesanan'] ?? 0;
          }
       ?>
-         <h3 style="font-size:3.5rem;">Rp.<?php echo $total_pesanan; ?></h3>
+         <h3 style="font-size:3.5rem;"><?php echo $total_pesanan; ?></h3>
          <a href="admin_order.php"><p>Pesanan Dikirim/Diproses</p></a>
       </div>
 

@@ -119,6 +119,76 @@ else {
                 </p>
                 <p><strong>Total Harga :</strong> Rp.<?= number_format($order['total_harga'], 0, ',', '.') ?></p>
                 <p><strong>Status Pesanan :</strong> <?= htmlspecialchars($order['status']) ?></p>
+                <?php if ($pembayaran && !empty($pembayaran['bukti_pembayaran'])): ?>
+                <p>
+                    <a href="#" onclick="openModal(); return false;" style="color:blue; text-decoration:underline;">Lihat Bukti Pembayaran</a>
+                </p>
+
+                <!-- Modal -->
+                <div id="buktiModal" class="modal">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <img class="modal-content" id="buktiImage" src="bukti/<?= htmlspecialchars($pembayaran['bukti_pembayaran']) ?>">
+                </div>
+
+                <style>
+                    .modal {
+                        display: none; 
+                        position: fixed;
+                        z-index: 1000;
+                        padding-top: 60px;
+                        left: 0;
+                        top: 0;
+                        width: 100%; 
+                        height: 100%; 
+                        overflow: auto;
+                        background-color: rgba(0,0,0,0.8); 
+                    }
+
+                    .modal-content {
+                        margin: auto;
+                        display: block;
+                        max-width: 90%;
+                        max-height: 80%;
+                    }
+
+                    .close {
+                        position: absolute;
+                        top: 30px;
+                        right: 35px;
+                        color: #fff;
+                        font-size: 35px;
+                        font-weight: bold;
+                        cursor: pointer;
+                    }
+
+                    .close:hover {
+                        color: #ccc;
+                    }
+                </style>
+
+                <script>
+                    function openModal() {
+                        document.getElementById("buktiModal").style.display = "block";
+                    }
+
+                    function closeModal() {
+                        document.getElementById("buktiModal").style.display = "none";
+                    }
+
+                    // Tutup modal kalau klik di luar gambar
+                    window.onclick = function(event) {
+                        var modal = document.getElementById("buktiModal");
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+                </script>
+            <?php else: ?>
+                <p><em>Belum ada bukti pembayaran.</em></p>
+            <?php endif; ?>
+
+
+
             </div>
         <?php else: ?>
             <!-- List Pesanan -->
