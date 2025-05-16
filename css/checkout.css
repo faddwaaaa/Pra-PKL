@@ -298,6 +298,11 @@ textarea {
     padding-right: 10px;
 }
 
+/* .product-list img {
+    width: 200px;
+    height: auto;
+} */
+
 .product-item {
     display: flex;
     gap: 15px;

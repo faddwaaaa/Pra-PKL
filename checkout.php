@@ -49,39 +49,56 @@ $total = $subtotal + $ongkir;
         <textarea name="alamat" placeholder="Contoh: Jl. Merdeka No.123, RT 01/RW 02" required></textarea>
 
         <h3>Metode Pembayaran</h3>
-        <div class="payment-methods">
-            <?php
-            $metodes = ['BCA', 'DANA', 'OVO'];
-            foreach ($metodes as $metode):
-            ?>
-                <label class="payment-option">
-                    <input type="radio" name="metode" value="<?= $metode ?>" onclick="showPopup('<?= $metode ?>')" required>
-                    <img src="images/<?= strtolower($metode) ?>.png" alt="<?= $metode ?>" style="max-width:15px">
-                    <span>Bank <?= $metode ?></span>
+       <div class="payment-methods">
+            <div class="payment-option" data-method="bca">
+                <input type="radio" id="bca" name="payment_method" value="bca" required>
+                <label for="bca">
+                    <img src="images/bca.png" alt="BCA">
+                    <span>Bank BCA</span>
+                 </label>
+            </div>
+                        
+            <div class="payment-option" data-method="dana">
+            <input type="radio" id="dana" name="payment_method" value="dana">
+            <label for="dana">
+                <img src="images/dana.png" alt="DANA">
+                <span>DANA</span>
+            </label>
+            </div>
+                        
+            <div class="payment-option" data-method="ovo">
+                <input type="radio" id="ovo" name="payment_method" value="ovo">
+                <label for="ovo">
+                     <img src="images/ovo.png" alt="OVO">
+                    <span>OVO</span>
                 </label>
-            <?php endforeach; ?>
+            </div>
         </div>
 
-        <label>Upload Bukti Pembayaran</label>
-        <div class="file-upload">
-            <input type="file" name="bukti" accept="image/*" required>
 
-        <label for="proof" class="upload-label">
-            <i class="fas fa-cloud-upload-alt"></i>
-            <span>Pilih file atau drop disini</span>
-            <span class="file-name">Format: JPG, PNG (max 2MB)</span>
-        </label>
+        
+          <div class="form-group">
+                        <label for="proof">Upload Bukti Pembayaran</label>
+                        <div class="file-upload">
+                            <input type="file" id="proof" name="proof" accept="bukti/*" required>
+                            <label for="proof" class="upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Pilih file atau drop disini</span>
+                                <span class="file-name">Format: JPG, PNG, JPEG (max 2MB)</span>
+                            </label>
+                        </div>
+                    </div>
 
-        </div>
 
         <div id="popup" class="popup hidden">
             <p>Nomor rekening: <span id="rekening"></span></p>
             <button type="button" onclick="closePopup()">Tutup</button>
         </div>
 
+
             <div class="form-actions">
                 <a href="keranjang.php" class="btn-back"><i class="fas fa-arrow-left"></i> Kembali ke Keranjang</a>
-                <button type="submit" name="checkout" class="btn-primary">🛍️ Buat Pesanan</button>
+                <button type="submit" name="checkout" class="btn-primary"> Buat Pesanan</button>
             </div>
 
     </form>
@@ -91,17 +108,17 @@ $total = $subtotal + $ongkir;
 
         <?php foreach ($produk as $item): ?>
             <div class="produk-list">
-                <img src="img/<?= $item['gambar'] ?>" alt="<?= $item['nama_buku'] ?>" style="max: width 15px;"> 
+                <img src="img/<?= $item['gambar'] ?>" alt="<?= $item['nama_buku'] ?>" style="width: 100px; height: auto;"> 
                 <div class="product-item">
                     <strong><?= $item['nama_buku'] ?></strong><br>
-                    <span class="pengarang"><?= $item['pengarang'] ?? 'Tidak diketahui' ?></span><br>
+                    <span class="pengarang"><?= $item['nama_pengarang'] ?? 'Tidak diketahui' ?></span><br>
                     <span>Rp<?= number_format($item['harga']) ?> x <?= $item['jumlah'] ?></span>
                 
                     Rp<?= number_format($item['harga'] * $item['jumlah']) ?>
                 </div>
             </div>
         <?php endforeach; ?>
-
+     
         <!-- <hr> -->
     <div class="summary-details">
         <div class="summary-row">
