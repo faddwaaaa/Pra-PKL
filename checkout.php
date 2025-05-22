@@ -2,15 +2,20 @@
 session_start();
 include 'koneksi.php';
 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: loginregister.php');
+    exit;
+}
+
 $user_id = $_SESSION['user_id'];
 $ongkir = 10000;
 $produk = [];
 $subtotal = 0;
 
-if (isset($_GET['produk_id']) && isset($_GET['jumlah'])) {
-    // Checkout langsung dari halaman produk
-    $produk_id = $_GET['produk_id'];
-    $jumlah = $_GET['jumlah'];
+// Cek apakah dari single product
+if (isset($_GET['source']) && $_GET['source'] === 'single' && isset($_GET['produk_id']) && isset($_GET['jumlah'])) {
+    $produk_id = intval($_GET['produk_id']);
+    $jumlah = intval($_GET['jumlah']);
 
     $query = mysqli_query($koneksi, "SELECT * FROM produk WHERE id = '$produk_id'");
     if ($row = mysqli_fetch_assoc($query)) {
@@ -19,7 +24,7 @@ if (isset($_GET['produk_id']) && isset($_GET['jumlah'])) {
         $subtotal += $row['harga'] * $jumlah;
     }
 } else {
-    // Checkout dari keranjang
+    // Dari keranjang
     $query = mysqli_query($koneksi, "SELECT k.*, p.nama_buku, p.harga, p.gambar, p.nama_pengarang FROM keranjang k JOIN produk p ON k.produk_id = p.id WHERE k.user_id = '$user_id'");
     while ($row = mysqli_fetch_assoc($query)) {
         $produk[] = $row;
@@ -29,6 +34,7 @@ if (isset($_GET['produk_id']) && isset($_GET['jumlah'])) {
 
 $total = $subtotal + $ongkir;
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -51,7 +57,7 @@ $total = $subtotal + $ongkir;
         <h3>Metode Pembayaran</h3>
        <div class="payment-methods">
             <div class="payment-option" data-method="bca">
-                <input type="radio" id="bca" name="payment_method" value="bca" required>
+                <input type="radio" id="bca" name="payment_method" value="BCA" required>
                 <label for="bca">
                     <img src="images/bca.png" alt="BCA">
                     <span>Bank BCA</span>
@@ -59,7 +65,7 @@ $total = $subtotal + $ongkir;
             </div>
                         
             <div class="payment-option" data-method="dana">
-            <input type="radio" id="dana" name="payment_method" value="dana">
+            <input type="radio" id="dana" name="payment_method" value="DANA" required>
             <label for="dana">
                 <img src="images/dana.png" alt="DANA">
                 <span>DANA</span>
@@ -67,7 +73,7 @@ $total = $subtotal + $ongkir;
             </div>
                         
             <div class="payment-option" data-method="ovo">
-                <input type="radio" id="ovo" name="payment_method" value="ovo">
+                <input type="radio" id="ovo" name="payment_method" value="OVO" required>
                 <label for="ovo">
                      <img src="images/ovo.png" alt="OVO">
                     <span>OVO</span>
@@ -81,11 +87,14 @@ $total = $subtotal + $ongkir;
                         <label for="proof">Upload Bukti Pembayaran</label>
                         <div class="file-upload">
                             <input type="file" id="proof" name="proof" accept="bukti/*" required>
+
                             <label for="proof" class="upload-label">
                                 <i class="fas fa-cloud-upload-alt"></i>
                                 <span>Pilih file atau drop disini</span>
                                 <span class="file-name">Format: JPG, PNG, JPEG (max 2MB)</span>
                             </label>
+
+                             
                         </div>
                     </div>
 
@@ -144,7 +153,7 @@ $total = $subtotal + $ongkir;
 
 
 
-
+<script src="js/checkout.js"></script>
 
 
 
@@ -165,6 +174,20 @@ function showPopup(metode) {
 function closePopup() {
     document.getElementById('popup').classList.add('hidden');
 }
+
+
+ document.addEventListener("DOMContentLoaded", function () {
+    const fileInput = document.getElementById('proof');
+    const fileName = document.querySelector('.file-name');
+
+    fileInput.addEventListener('change', function () {
+      if (this.files.length > 0) {
+        fileName.textContent = "Dipilih: " + this.files[0].name;
+      } else {
+        fileName.textContent = 'Format: JPG, PNG, JPEG (max 2MB)';
+      }
+    });
+  });
 </script>
 </body>
 </html>

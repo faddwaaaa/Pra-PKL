@@ -10,20 +10,19 @@ if (!isset($_GET['id'])) {
     exit;
 }
 $id = intval($_GET['id']);
+
 // Proses Checkout
 if (isset($_POST['checkout'])) {
-  if (!$user_id) {
-      header('Location: loginregister.php');
-      exit;
-  }
+    if (!$user_id) {
+        header('Location: loginregister.php');
+        exit;
+    }
 
-  // Ambil data yang dibutuhkan
-  $produk_id = intval($_POST['produk_id']);
-  $jumlah = intval($_POST['jumlah']);
+    $produk_id = intval($_POST['produk_id']);
+    $jumlah = intval($_POST['jumlah']);
 
-  // Redirect ke halaman checkout dengan parameter
-  header("Location: checkout.php?produk_id=$produk_id&jumlah=$jumlah");
-  exit;
+    header("Location: checkout.php?source=single&produk_id=$produk_id&jumlah=$jumlah");
+    exit;
 }
 
 // Proses tambah ke keranjang
@@ -36,7 +35,6 @@ if (isset($_POST['masukkan'])) {
     $produk_id = intval($_POST['produk_id']);
     $jumlah = intval($_POST['jumlah']);
 
-    // Cek apakah produk sudah ada di keranjang
     $check = mysqli_query($koneksi, "SELECT * FROM keranjang WHERE user_id = '$user_id' AND produk_id = '$produk_id'");
     if (mysqli_num_rows($check) > 0) {
         echo "<script>alert('Produk sudah ada di keranjang!');</script>";
@@ -50,7 +48,6 @@ if (isset($_POST['masukkan'])) {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">
@@ -98,7 +95,7 @@ if (isset($_POST['masukkan'])) {
     <input type="hidden" name="stok" value="<?php echo $produk['stok']; ?>">
     <input type="hidden" name="gambar" value="<?php echo $produk['gambar']; ?>">
     <input type="number" name="jumlah" value="1" min="1" max="<?php echo $produk['stok']; ?>" class="qty-input">
-    <button type="submit" name="checkout" class="btn scheckout">Checkout</button>
+    <button type="submit" name="checkout" class="btn scheckout">Beli Sekarang</button>
     <button type="submit" name="masukkan" class="btn keranjang">Masukkan keranjang</button>
   </form>
 <?php else: ?>
@@ -147,3 +144,4 @@ if (isset($_POST['masukkan'])) {
    <?php include 'footer.php'; ?>
 </body>
 </html>
+

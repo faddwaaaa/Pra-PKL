@@ -5,14 +5,14 @@ include 'koneksi.php';
 if (isset($_POST['checkout'])) {
     $user_id = $_SESSION['user_id'];
     $alamat = mysqli_real_escape_string($koneksi, $_POST['alamat']);
-    $metode = $_POST['metode'];
+    $metode = $_POST['payment_method'];
     $tanggal = date('Y-m-d');
     $ongkir = 10000;
 
     // Validasi file upload
-    if (isset($_FILES['bukti']) && $_FILES['bukti']['error'] === UPLOAD_ERR_OK) {
-        $namaFile = $_FILES['bukti']['name'];
-        $tmpName = $_FILES['bukti']['tmp_name'];
+    if (isset($_FILES['proof']) && $_FILES['proof']['error'] === UPLOAD_ERR_OK) {
+        $namaFile = $_FILES['proof']['name'];
+        $tmpName = $_FILES['proof']['tmp_name'];
         $ext = pathinfo($namaFile, PATHINFO_EXTENSION);
         $namaBaru = uniqid() . '.' . $ext;
         $uploadPath = 'bukti/' . $namaBaru;

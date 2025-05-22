@@ -94,6 +94,7 @@ if (isset($_GET['delete'])) {
       echo '<table>
             <tr>
                <th>ID Pesanan</th>
+               <th>ID Users</th>
                <th>Tanggal</th>
                <th>Alamat</th>
                <th>Total Produk</th>
@@ -121,6 +122,7 @@ if (isset($_GET['delete'])) {
 
          echo '<tr>';
          echo '<td>' . $order_id . '</td>';
+         echo '<td>' . $fetch_orders['user_id'] . '</td>'; 
          echo '<td>' . date('d-M-Y', strtotime($fetch_orders['tanggal_pesanan'])) . '</td>';
          echo '<td>' . htmlspecialchars($fetch_orders['alamat_pengiriman']) . '</td>';
          echo '<td>' . $total_produk . '</td>';
