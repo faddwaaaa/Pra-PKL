@@ -17,8 +17,8 @@ if (isset($_POST['checkout'])) {
         $namaBaru = uniqid() . '.' . $ext;
         $uploadPath = 'bukti/' . $namaBaru;
 
-        if (!is_dir('bukti')) {
-            mkdir('bukti');
+        if (!is_dir('proof')) {
+            mkdir('proof');
         }
 
         move_uploaded_file($tmpName, $uploadPath);
