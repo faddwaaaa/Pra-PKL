@@ -2,6 +2,11 @@
 session_start();
 include 'koneksi.php';
 
+// $id = $_POST['produk_id'];
+// $nama_buku = $_POST['nama_buku'];
+// $harga = $_POST['harga'];
+
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: loginregister.php');
     exit;
@@ -50,6 +55,10 @@ $total = $subtotal + $ongkir;
 <div class="checkout-container">
     <form action="proses_checkout.php" method="post" enctype="multipart/form-data" class="checkout-form">
         <h2>Checkout</h2>
+
+        <!-- <input type="hidden" name="id" value="">
+        <input type="hidden" name="nama_buku" value="">
+        <input type="hidden" name="harga" value=""> -->
 
         <label for="alamat">Alamat Lengkap</label>
         <textarea name="alamat" placeholder="Contoh: Jl. Merdeka No.123, RT 01/RW 02" required></textarea>

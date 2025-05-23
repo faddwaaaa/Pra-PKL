@@ -589,38 +589,71 @@ section{
  } */
 
 /*---- home -------------------*/
-.home{
+.home {
    min-height: 88vh;
    background: url(../img/bg\ home.png) no-repeat;
    background-size: cover;
    background-position: center;
    display: flex;
+   flex-direction: column; /* agar children ditumpuk ke bawah */
    align-items: center;
    justify-content: center;
    margin-top: 70px;
-}
-
-.home .content{
+   padding: 2rem;
    text-align: center;
-   width: 65rem;
 }
 
-.home .content h3{
-    margin-bottom: 40px;
-   font-size: 5.7rem;
-   color:var(--white);
-   text-transform: uppercase;
+.home .typewriter h3 {
+  color: #fff;
+  font-family: monospace;
+  font-size: 4.2rem; /* lebih besar */
+  overflow: hidden;
+  border-right: .15em solid orange;
+  white-space: nowrap;
+  margin: 0 auto 3rem; /* jarak bawah */
+  letter-spacing: .15em;
+  animation:
+    typing 3.5s steps(40, end),
+    blink-caret .5s step-end infinite;
 }
 
-.home .content p{
-    margin-bottom: 20px;
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange }
+}
+
+.home .content {
+   max-width: 75rem;
+   width: 100%;
+}
+
+.home .content p {
+   margin-bottom: 2rem;
    font-size: 1.8rem;
-   color:var(--light-white);
-   padding:1rem 0;
-   line-height: 1.5;
+   color: var(--light-white);
+   line-height: 1.6;
+   padding: 0 1rem;
 }
-/*---------------------------*/
 
+.white-btn {
+   display: inline-block;
+   background: #8a5b38;
+   color: #fff;
+   padding: 1rem 2rem;
+   font-size: 1.7rem;
+   border-radius: 0.5rem;
+   text-decoration: none;
+   transition: 0.3s;
+}
+
+.white-btn:hover {
+   background: #6e4225;
+}
 
 /*--------- produk -------------*/
 .products {
@@ -965,11 +998,37 @@ section{
    padding: 30px 5px;
 }
 
-.home-contact .content h3{
+/* DEMO-SPECIFIC STYLES */
+.typewriter h3 {
+  color: #fff;
+  font-family: monospace;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 3.5s steps(30, end),
+    blink-caret .5s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange }
+}
+
+/* .home-contact .content h3{
    font-size: 3rem;
    text-transform: uppercase;
    color:var(--white);
-}
+} */
 
 .home-contact .content p{
    padding:1rem 0;

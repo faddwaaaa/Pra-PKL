@@ -21,9 +21,25 @@ if (isset($_POST['checkout'])) {
     $produk_id = intval($_POST['produk_id']);
     $jumlah = intval($_POST['jumlah']);
 
+    // Cek apakah produk sudah ada di keranjang
+    $check = mysqli_query($koneksi, "SELECT * FROM keranjang WHERE user_id = '$user_id' AND produk_id = '$produk_id'");
+    if (mysqli_num_rows($check) == 0) {
+        // Jika belum ada, masukkan ke keranjang
+        $insert = mysqli_query($koneksi, "INSERT INTO keranjang (user_id, produk_id, jumlah) VALUES ('$user_id', '$produk_id', '$jumlah')");
+        if (!$insert) {
+            echo "<script>alert('Gagal menambahkan ke keranjang: " . mysqli_error($koneksi) . "');</script>";
+            exit;
+        }
+    } else {
+        // Jika sudah ada, update jumlah
+        $update = mysqli_query($koneksi, "UPDATE keranjang SET jumlah = jumlah + $jumlah WHERE user_id = '$user_id' AND produk_id = '$produk_id'");
+    }
+
+    // Redirect ke halaman checkout
     header("Location: checkout.php?source=single&produk_id=$produk_id&jumlah=$jumlah");
     exit;
 }
+
 
 // Proses tambah ke keranjang
 if (isset($_POST['masukkan'])) {

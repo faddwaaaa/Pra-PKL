@@ -45,18 +45,82 @@ if (isset($_POST['add_to_cart'])) {
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/style.css">    
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+
+     .home {
+   min-height: 88vh;
+   background: url(../img/bg\ home.png) no-repeat;
+   background-size: cover;
+   background-position: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 2rem;
+   margin-top: 70px;
+   text-align: center;
+}
+
+.home-container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 2rem;
+   max-width: 75rem;
+   padding: 2rem;
+   border-radius: 1rem;
+}
+
+.typewriter h1 {
+  font-size: 4.9rem;
+  color: #fff;
+  font-family: monospace;
+  overflow: hidden;
+  border-right: .15em solid orange;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: normal;
+  animation:
+    typing 3.5s steps(30, end),
+    blink-caret .5s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange }
+}
+
+.home .content p {
+   font-size: 1.7rem;
+   color: #fff;
+   line-height: 1.6;
+}
+
+
+   </style>
 </head>
 <body>
     <?php include 'header.php'; ?>
 
     <section class="home">
-        <div class="content">
-            <h3>JELAJAHI DUNIA BARU DI SETIAP HALAMAN</h3>
-            <p>Selamat datang di <span>Booknest</span>, toko buku online yang menyediakan koleksi buku terlengkap dari berbagai genre, penulis, dan penerbit. Temukan buku-buku favorit Anda dengan mudah dan nikmati pengalaman belanja yang nyaman dengan berbagai pilihan pembayaran dan pengiriman cepat. Dari novel best-seller hingga buku akademik, kami siap memenuhi kebutuhan membaca Anda. Jelajahi sekarang dan temukan dunia baru melalui setiap halaman buku yang kami tawarkan.</p>
-            <a href="about.php" class="white-btn">Jelajahi</a>
-        </div>
-    </section>
+  <div class="home-container">
+    <div class="typewriter">
+        <h1>JELAJAHI DUNIA BARU DI SETIAP HALAMAN</h1>
+    </div>
+
+    <div class="content">
+        <p>Selamat datang di <span>Booknest</span>, toko buku online yang menyediakan koleksi buku terlengkap dari berbagai genre, penulis, dan penerbit. Temukan buku-buku favorit Anda dengan mudah dan nikmati pengalaman belanja yang nyaman dengan berbagai pilihan pembayaran dan pengiriman cepat. Dari novel best-seller hingga buku akademik, kami siap memenuhi kebutuhan membaca Anda. Jelajahi sekarang dan temukan dunia baru melalui setiap halaman buku yang kami tawarkan.</p>
+        <a href="about.php" class="white-btn">Jelajahi</a>
+    </div>
+  </div>
+</section>
+
 
 <section class="products">
    <h1 class="title" style="font-size: 2.5rem;">Cerita Terbaik Untuk Kamu</h1>
