@@ -167,6 +167,29 @@ $total = $subtotal + $ongkir;
 
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const fileInput = document.getElementById('proof');
+    const fileName = document.querySelector('.file-name');
+
+    fileInput.addEventListener('change', function () {
+        if (this.files.length > 0) {
+            fileName.textContent = "Dipilih: " + this.files[0].name;
+        } else {
+            fileName.textContent = 'Format: JPG, PNG, JPEG (max 2MB)';
+        }
+    });
+
+    // === Tambahan Baru Untuk Popup Metode Pembayaran ===
+    const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
+    paymentRadios.forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            showPopup(this.value); // Panggil showPopup dengan metode terpilih
+        });
+    });
+});
+
+
+  
 function showPopup(metode) {
     const popup = document.getElementById('popup');
     const rekening = document.getElementById('rekening');
@@ -183,20 +206,6 @@ function showPopup(metode) {
 function closePopup() {
     document.getElementById('popup').classList.add('hidden');
 }
-
-
- document.addEventListener("DOMContentLoaded", function () {
-    const fileInput = document.getElementById('proof');
-    const fileName = document.querySelector('.file-name');
-
-    fileInput.addEventListener('change', function () {
-      if (this.files.length > 0) {
-        fileName.textContent = "Dipilih: " + this.files[0].name;
-      } else {
-        fileName.textContent = 'Format: JPG, PNG, JPEG (max 2MB)';
-      }
-    });
-  });
 </script>
 </body>
 </html>
