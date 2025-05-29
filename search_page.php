@@ -75,13 +75,13 @@ if (isset($_POST['add_to_cart'])) {
          if(mysqli_num_rows($select_products) > 0){
             while($fetch_products = mysqli_fetch_assoc($select_products)){
       ?>
-      <form action="" method="post" class="box">
+      <form action="" method="post" class="box" style="border: 1px solid #eee; padding: 10px; position: relative; border-radius: 8px; width: fit-content; display: flex; flex-direction: column; align-items: center;">
          <a href="detail_produk.php?id=<?php echo $fetch_products['id']; ?>">
-            <img class="gambar" src="img/<?php echo $fetch_products['gambar']; ?>" alt="">
+         <img class="gambar" style="height: auto; width: 150px;" src="img/<?php echo $fetch_products['gambar']; ?>" alt="">
          </a>
-         <div class="nama_buku"><?php echo $fetch_products['nama_buku']; ?></div>
-         <div class="nama_pengarang"><?php echo $fetch_products['nama_pengarang']; ?></div>
-         <div class="harga">Rp.<?php echo $fetch_products['harga']; ?></div>
+         <div class="nama_buku" style="font-size: 1.8rem; text-align: center; margin: 0;"><?php echo $fetch_products['nama_buku']; ?></div>
+         <div class="nama_pengarang" style="font-size: 1.5rem; text-align: center; margin: 0;"><?php echo $fetch_products['nama_pengarang']; ?></div>
+         <div class="harga" style="padding: 4px 8px; border-radius: 4px; font-size: 1.5rem; background: red; color: white; position: absolute; top: 8px; left: 8px;">Rp.<?php echo $fetch_products['harga']; ?></div>
       </form>
       <?php
             }
@@ -94,6 +94,8 @@ if (isset($_POST['add_to_cart'])) {
    </div>
 
 </section>
+
+
 
 
 

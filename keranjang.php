@@ -44,6 +44,46 @@ if(isset($_GET['delete_all'])){
    <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
 
+   <style>
+  .quantity-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  height: 40px;
+}
+
+.quantity-control .minus,
+.quantity-control .plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  background-color: #8B5E3C;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.quantity-control .quantity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  text-align: center;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+
+   </style>
+
 </head>
 
 <body>
@@ -72,37 +112,23 @@ if(isset($_GET['delete_all'])){
          <a href="keranjang.php?delete=<?php echo $fetch_cart['id']; ?>" class="fas fa-times" onclick="return confirm('Hapus ini dari keranjang?');"></a>
          <img src="img/<?php echo $fetch_cart['gambar']; ?>" alt="">
          <div class="nama_buku" style="font-size: 2.3rem;"><?php echo $fetch_cart['nama_buku']; ?></div>
-         <div class="harga">Rp.<?php echo $fetch_cart['harga']; ?></div>
+         <div class="harga"  style="margin-bottom: 0px;">Rp.<?php echo $fetch_cart['harga'];?></div>
 
          <form action="" method="post">
             <input type="hidden" name="id" value="<?php echo $fetch_cart['id']; ?>">
             <!-- <input type="number" min="1" name="jumlah" value=""> -->
-            <div class="quantity-control" data-id="<?php echo $fetch_cart['id']; ?>" data-harga="<?php echo $fetch_cart['harga']; ?>">    
-               <button style="padding: 6px 15px;
-                  font-size: 18px;
-                  background-color: #8B5E3C;
-                  color: white;
-                  border: none;
-                  border-radius: 6px;
-                  cursor: pointer;"class="minus">-</button>
-               <span style="font-size: 18px;
-                  min-width: 30px;
-                  text-align: center;"class="quantity"><?php echo $fetch_cart['jumlah']; ?></span>
-               <button style="  padding: 6px 15px;
-                  font-size: 18px;
-                  background-color: #8B5E3C;
-                  color: white;
-                  border: none;
-                  border-radius: 6px;
-                  cursor: pointer;"class="plus">+</button>
+            <div class="quantity-control" data-id="<?php echo $fetch_cart['id']; ?>" data-harga="<?php echo $fetch_cart['harga']; ?>" style="margin-left: 54px;">    
+               <button class="minus">-</button>
+               <span class="quantity"><?php echo $fetch_cart['jumlah']; ?></span>
+               <button class="plus">+</button>
             </div>
          </form>
-         <div class="sub-total"> sub total : <span>Rp.<?php echo $sub_total = ($fetch_cart['jumlah'] * $fetch_cart['harga']); ?></span> </div>
+         <div class="sub-total"> Sub Total : <span>Rp.<?php echo $sub_total = ($fetch_cart['jumlah'] * $fetch_cart['harga']); ?></span> </div>
       </div>
       <?php
          }
       }else{
-         echo '<p class="empty">Keranjang kamu kosong</p>';
+         echo '<p class="empty">Keranjang Kamu Kosong</p>';
       }
       ?>
    </div>

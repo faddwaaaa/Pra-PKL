@@ -138,7 +138,7 @@ if (isset($_POST['add_to_cart'])) {
       <div class="nama_buku" style="font-size: 1.8rem; text-align: center; margin: 0;"><?php echo $fetch_products['nama_buku']; ?></div>
       <div class="nama_pengarang" style="font-size: 1.5rem; text-align: center; margin: 0;"><?php echo $fetch_products['nama_pengarang']; ?></div>
       <div class="harga" style="padding: 4px 8px; border-radius: 4px; font-size: 1.5rem; background: red; color: white; position: absolute; top: 8px; left: 8px;">Rp.<?php echo $fetch_products['harga']; ?></div>
-</form>
+      </form>
       <?php
             }
          }else{
@@ -171,7 +171,7 @@ if (isset($_POST['add_to_cart'])) {
 
 <section class="home-contact">
         <div class="content">
-            <h3>have any questions?</h3>
+            <h3 style="font-size: 3rem; text-transform: uppercase; color:var(--white);">have any questions?</h3>
             <p>Temukan inspirasimu di Booknest, Pilihan buku terlengkap dengan kemudahan berbelanja online.</p>
              <a href="messages.php" class="white-btn1">Messages us</a>
         </div>

@@ -61,7 +61,7 @@ if (isset($_POST['add_to_cart'])) {
    <div class="box-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; justify-items: center;">
 
       <?php  
-         $select_products = mysqli_query($koneksi, "SELECT * FROM `produk` LIMIT 8") or die('query failed');
+         $select_products = mysqli_query($koneksi, "SELECT * FROM `produk`") or die('query failed');
          if(mysqli_num_rows($select_products) > 0){
             while($fetch_products = mysqli_fetch_assoc($select_products)){
       ?>
@@ -81,9 +81,7 @@ if (isset($_POST['add_to_cart'])) {
       ?>
    </div>
 
-   <div class="load-more" style="margin-top: 2rem; text-align:center">
-      <a href="shop.php" class="option-btn">load more</a>
-   </div>
+   
 </section>
 
 

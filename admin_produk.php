@@ -15,7 +15,8 @@ if(isset($_POST['add_product'])){
     $harga = $_POST['harga'];
     $nama_pengarang = $_POST['nama_pengarang'];
     $deskripsi = $_POST['deskripsi'];
-    $gambar = $_FILES['gambar']['name'];
+    $gambar = mysqli_real_escape_string($koneksi, $_FILES['gambar']['name']);
+    $stok = $_POST['stok'];
     $image_size = $_FILES['gambar']['size'];
     $image_tmp_name = $_FILES['gambar']['tmp_name'];
     $image_folder = 'img/'.$gambar;
@@ -25,7 +26,7 @@ if(isset($_POST['add_product'])){
     if(mysqli_num_rows($select_product_name) > 0){
        $message[] = 'Nama produk sudah ditambahkan!';
     }else{
-       $add_product_query = mysqli_query($koneksi, "INSERT INTO `produk`(nama_buku, harga, nama_pengarang, deskripsi, gambar) VALUES('$nama_buku', '$harga', '$nama_pengarang', '$deskripsi', '$gambar')") or die('query failed');
+       $add_product_query = mysqli_query($koneksi, "INSERT INTO `produk`(nama_buku, harga, nama_pengarang, deskripsi, gambar, stok) VALUES('$nama_buku', '$harga', '$nama_pengarang', '$deskripsi', '$gambar', '$stok')") or die(mysqli_error($koneksi));
  
        if($add_product_query){
           if($image_size > 2000000){
@@ -109,11 +110,11 @@ if(isset($_POST['add_product'])){
 
    <form action="" method="post" enctype="multipart/form-data">
       <h3>Tambahkan Produk</h3>
-      <input type="text" name="nama_buku" class="box" placeholder="masukkan judul buku" required>
-      <input type="number" min="0" name="harga" class="box" placeholder="masukkan harga" required>
-      <input type="number" min="0" name="stok" class="box" placeholder="masukkan stok" required>
-      <input type="text" name="nama_pengarang" class="box" placeholder="masukkan nama pengarang" required>
-      <input type="text" name="deskripsi" class="box" placeholder="masukkan deskripsi" required>
+      <input type="text" name="nama_buku" class="box" placeholder="Masukkan judul buku" required>
+      <input type="number" min="0" name="harga" class="box" placeholder="Masukkan harga" required>
+      <input type="number" name="stok" min="1" class="box" placeholder="Masukkan stok" required>
+      <input type="text" name="nama_pengarang" class="box" placeholder="Masukkan nama pengarang" required>
+      <input type="text" name="deskripsi" class="box" placeholder="Masukkan deskripsi" required>
       <input type="file" name="gambar" accept="img/jpg, img/jpeg, img/png" class="box" required>
       <input type="submit" value="Tambah Produk" name="add_product" class="btn">
    </form>

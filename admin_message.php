@@ -43,7 +43,7 @@ if(isset($_GET['delete'])){
 
    <div class="box-container">
    <?php
-      $select_message = mysqli_query($koneksi, "SELECT message.id AS message_id, user.nama, user.email, message.message FROM user JOIN message ON user.id = message.user_id") or die('query failed');
+      $select_message = mysqli_query($koneksi, "SELECT message.id AS message_id, message.nama, user.email, message.message FROM user JOIN message ON user.id = message.user_id") or die('query failed');
       if(mysqli_num_rows($select_message) > 0){
          while($fetch_message = mysqli_fetch_assoc($select_message)){
       
