@@ -137,7 +137,7 @@ $total = $subtotal + $ongkir;
                             <h5><?= $item['nama_buku'] ?></h5>
                             <div class="product-meta">
                                 <span class="pengarang"><?= $item['nama_pengarang'] ?? 'Tidak diketahui' ?></span><br>
-                                <span class="harga">Rp<?= number_format($item['harga']) ?> x <?= $item['jumlah'] ?></span>       
+                                <span class="harga">Rp.<?= number_format($item['harga']) ?> x <?= $item['jumlah'] ?></span>       
                             </div>
                         </div>
                     </div>
@@ -147,18 +147,14 @@ $total = $subtotal + $ongkir;
             <!-- <hr> -->
             <div class="summary-details">
                 <div class="summary-row">
-                    <span>Subtotal</span>
-                    <span>  Rp<?= number_format($subtotal) ?> </span>
+                    <span>SubTotal</span>
+                    <span>Rp.<?= number_format($subtotal, 0, ',', '.') ?> </span>
                 </div>
                 <div class="summary-row">
                     <span>Ongkos Kirim</span>
-                    <span>Rp<?= number_format($ongkir) ?></span>
-                </div>  
-                <div class="summary-row">
-                    <span>Total Pembayaran</span>
-                    <span>Rp<?= number_format($total) ?></span>
+                    <span>Rp.<?= number_format($ongkir, 0, ',', '.') ?></span>
                 </div>
-                <p class="total">Total Pembayaran: <strong>Rp<?= number_format($total) ?></strong></p>
+                <p class="total">Total Pembayaran: <strong>Rp.<?= number_format($total, 0, ',', '.') ?></strong></p>
             </div>
             
         </div>
