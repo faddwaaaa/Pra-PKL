@@ -137,7 +137,7 @@ $total = $subtotal + $ongkir;
                             <h5><?= $item['nama_buku'] ?></h5>
                             <div class="product-meta">
                                 <span class="pengarang"><?= $item['nama_pengarang'] ?? 'Tidak diketahui' ?></span><br>
-                                <span class="harga">Rp.<?= number_format($item['harga']) ?> x <?= $item['jumlah'] ?></span>       
+                                <span class="harga">Rp.<?= number_format($item['harga'], 0, ',', '.') ?> x <?= $item['jumlah'] ?></span>       
                             </div>
                         </div>
                     </div>
