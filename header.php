@@ -29,6 +29,17 @@ if(isset($message)){
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="css/style.css"> 
+    <style>
+      .header .header-2 .flex .navbar a {
+        text-decoration: none;
+    }
+       .header .header-2 .flex .navbar a:hover{
+            color: #8b5e3c;
+         }
+       .header .flex .user-box div a:hover{
+            text-decoration: underline;
+         }
+    </style>
 </head>
 <body>
     
@@ -42,12 +53,13 @@ if(isset($message)){
       <a href="home.php" class="logo">Booknest</a>
 
       <nav class="navbar">
-         <a href="home.php">Home</a>
-         <a href="about.php">About</a>
-         <a href="shop.php">Shop</a>
-         <a href="messages.php">Messages</a>
-         <a href="orders.php">Orders</a>
+         <a href="home.php" style="text-decoration: none;">Home</a>
+         <a href="about.php" style="text-decoration: none;">About</a>
+         <a href="shop.php" style="text-decoration: none;">Shop</a>
+         <a href="messages.php" style="text-decoration: none;">Messages</a>
+         <a href="orders.php" style="text-decoration: none;">Orders</a>
       </nav>
+
 
       <div class="icons">
          <a href="search_page.php" class="fas fa-search"></a>

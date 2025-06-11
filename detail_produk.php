@@ -71,6 +71,35 @@ if (isset($_POST['masukkan'])) {
   <meta charset="UTF-8">
   <title>Detail Produk</title>
   <link rel="stylesheet" href="./css/style.css">
+  <style>
+   .btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+  font-family: inherit;
+  color: #fff;
+  background-color: #a87c52;
+  box-shadow: none;
+  filter: none;
+  opacity: 1;
+  text-shadow: none;
+}
+
+ .scheckout,
+ .keranjang {
+   background-color: #a87c52;
+   color: #fff;
+ }
+
+.scheckout:hover,
+.keranjang:hover {
+  background-color: #cfcac0;
+  color: #000;
+}
+  </style>
 </head>
 <body>
 
@@ -110,7 +139,7 @@ if (isset($_POST['masukkan'])) {
     <input type="hidden" name="harga" value="<?php echo $produk['harga']; ?>">
     <input type="hidden" name="stok" value="<?php echo $produk['stok']; ?>">
     <input type="hidden" name="gambar" value="<?php echo $produk['gambar']; ?>">
-    <input type="number" name="jumlah" value="1" min="1" max="<?php echo $produk['stok']; ?>" class="qty-input">
+    <input type="number" name="jumlah" value="1" min="1" max="<?php echo $produk['stok']; ?>" class="qty-input" style="margin-top:1.3rem;">
     <button type="submit" name="checkout" class="btn scheckout">Beli Sekarang</button>
     <button type="submit" name="masukkan" class="btn keranjang">Masukkan keranjang</button>
   </form>

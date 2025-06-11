@@ -300,12 +300,6 @@ section{
     z-index: 999;
     margin:0 1rem;
     font-size: 2rem;
-    color:var(--light-color);
- }
- 
- .header .header-2 .flex .navbar a:hover{
-    color:#8B5E3C;
-    text-decoration: underline;
  }
  
  .header .header-2 .flex .icons > *{
@@ -365,9 +359,7 @@ section{
     color:var(--orange);
  }
  
- .header .flex .user-box div a:hover{
-    text-decoration: underline;
- }
+
  
 /* .user-box {
     position: absolute;
@@ -857,32 +849,7 @@ section{
    border-radius: 5px;
  }
  
- .btn {
-   padding: 6px 14px;
-   border: none;
-   border-radius: 6px;
-   cursor: pointer;
-   font-size: 14px;
-   transition: 0.3s;
- }
- 
- .checkout {
-   background-color: #a87c52;
-   color: #000;
- }
- 
- .checkout:hover {
-   background-color: #cfcac0;
- }
- 
- .keranjang {
-   background-color: #a87c52;
-   color: #fff;
- }
- 
- .keranjang:hover {
-   background-color: #8a6845;
- }
+
  
  .empty {
    text-align: center;
