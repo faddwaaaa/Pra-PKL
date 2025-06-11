@@ -48,6 +48,20 @@ if (isset($_POST['add_to_cart'])) {
     <link rel="stylesheet" href="css/style.css">
     
     <style>
+.white-btn1 {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #eeeadd;
+  color: #000;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1.6rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+.white-btn1:hover {
+  background-color: #8b5e3c;
+  color: #333;
+}
 
      .home {
    min-height: 88vh;
@@ -101,6 +115,8 @@ if (isset($_POST['add_to_cart'])) {
    color: #fff;
    line-height: 1.6;
 }
+
+
 
 
    </style>

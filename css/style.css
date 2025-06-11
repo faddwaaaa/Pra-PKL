@@ -1004,7 +1004,7 @@ section{
    font-size: 1.7rem;
 }
 
-.home-contact .content .white-btn1 {
+/* .home-contact .content .white-btn1 {
    background-color: #EEECDD;
    display: inline-block;
    margin-top: 1rem;
@@ -1014,7 +1014,8 @@ section{
    font-size: 1.8rem;
    border-radius: .5rem;
    text-transform: capitalize;
-}
+} */
+
 
 .home-contact .content h1{
    font-size: 10rem;
